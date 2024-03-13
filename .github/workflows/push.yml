@@ -43,6 +43,9 @@ jobs:
           java-version: '21'      # See 'Options' section below for all supported versions
           distribution: 'graalvm' # See 'Options' section below for all available distributions
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: build
+        run: |
+         ./mvnw install -Dnative
       - name: Login to registry
         uses: docker/login-action@v3
         with:
