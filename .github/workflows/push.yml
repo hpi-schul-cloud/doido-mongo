@@ -153,7 +153,6 @@ jobs:
           name: ${{ matrix.tenants }}
           path: ${{github.workspace }}/${{ matrix.tenants }}.tar
 
-jobs:
   deploy:
     runs-on: ubuntu-latest
     name: deploy dbc
