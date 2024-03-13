@@ -1,13 +1,12 @@
 # doido-mongo
 The name  doido-mongo stands for **D**ev**O**ps **I**mproved **D**atabase **O**perator for MongoDB.
 
-# What shoud it do
-This Operator shoud be make it easy for developers to add to an exist mongodb replica set new databeses with new users who get an auto generated password and an auto generated kubernetes Secret with an URI for the connection in it.
-# doido-mongo-2
-
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+# What shoud it do
+This Operator shoud be make it easy for developers to add to an exist mongodb replica set new databeses with new users who get an auto generated password and an auto generated kubernetes Secret with an URI for the connection in it.
 
 ## Running the application in dev mode
 
@@ -48,7 +47,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/doido-mongo-2-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/doido-mongo-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
