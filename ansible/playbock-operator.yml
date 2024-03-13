@@ -1,0 +1,10 @@
+---
+- name: App Deploy
+  hosts:
+    - develop
+  connection: local
+  roles:
+    - sys
+    - pre_deployment
+    - doido-mongo
+    - post_deployment

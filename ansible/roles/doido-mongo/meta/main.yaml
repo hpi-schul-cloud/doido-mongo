@@ -1,0 +1,9 @@
+galaxy_info:
+  role_name: doido-mongo
+  author: Schul-Cloud Verbund
+  description: Ansible role for the deployment of an Mongo Operator who cann create MongoDBs and users and add then to kubernetes secrets
+  company: Schul-Cloud Verbund
+  license: license (AGPLv3)
+  min_ansible_version: 2.8
+  galaxy_tags: []
+dependencies: []

@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doido-mongo-operator
+  namespace: {{ NAMESPACE }}
+  labels:
+    app: doido-mongo
+    app.kubernetes.io/part-of: schulcloud-verbund
+    app.kubernetes.io/name: doido-mongo
+    app.kubernetes.io/component: operator
+    app.kubernetes.io/managed-by: ansible
+    git.repo: {{ DOIDO_MONGO_REPO_NAME }}
+spec:
+  replicas: {{ DOIDO_MONGO_REPLICAS|default(1, true) }}
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 4
+  paused: false
+  selector:
+    matchLabels:
+      app: doido-mongo
+  template:
+    metadata:
+      labels:
+        app: doido-mongo
+        app.kubernetes.io/part-of: schulcloud-verbund
+        app.kubernetes.io/name: doido-mongo
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/managed-by: ansible
+        git.repo: {{ DOIDO_MONGO_REPO_NAME }}
+      annotations:
+        configmapHash: ""
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      containers:
+      - name: doido-mongo-operator
+        image: {{ DOIDO_MONGO_IMAGE_NAME }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ DOIDO_MONGO_CPU_LIMITS|default("1000m", true) }}
+            memory: {{ DOIDO_MONGO_MEMORY_LIMITS|default("1Gi", true) }}
+          requests:
+            cpu: {{ DOIDO_MONGO_CPU_REQUESTS|default("100m", true) }}
+            memory: {{ DOIDO_MONGO_MEMORY_REQUESTS|default("128Mi", true) }}

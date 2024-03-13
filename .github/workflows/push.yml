@@ -21,10 +21,10 @@ jobs:
           BRANCH_SHA: ${{ github.sha }}
         run: |
           if [ "${{ github.event_name }}" == 'pull_request' ]; then
-            echo "branch=$PR_HEAD_REF" >> $GITHUB_OUTPUT
+            echo "branch=devops-$PR_HEAD_REF" >> $GITHUB_OUTPUT
             echo "sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
           else
-            echo "branch=$BRANCH_REF_NAME" >> $GITHUB_OUTPUT
+            echo "branch=devops-$BRANCH_REF_NAME" >> $GITHUB_OUTPUT
             echo "sha=$BRANCH_SHA" >> $GITHUB_OUTPUT
           fi
   
@@ -81,3 +81,124 @@ jobs:
           pull: true
           tags: ghcr.io/${{ github.repository }}:${{ needs.branch_meta.outputs.sha }}
           labels: ${{ steps.docker_meta_img.outputs.labels }}
+
+  create_branch_identifier:
+    needs:
+      - branch_meta
+    uses: hpi-schul-cloud/dof_app_deploy/.github/workflows/branch-to-namespace.yml@main
+    with:
+      branch: ${{ needs.branch_meta.outputs.branch }}
+
+  create_artifacts_repos:
+    runs-on: ubuntu-latest
+    needs:
+      - branch_meta
+    strategy:
+      matrix:
+        repos:
+         - dof_app_deploy
+         - doido-mongo
+    steps:
+      - run: |
+          echo "git_ref_name=${{ needs.branch_meta.outputs.branch }}" >> $GITHUB_ENV
+          echo git_ref_name ${{ needs.branch_meta.outputs.branch }}
+      - uses: actions/checkout@v4
+        with:
+          repository: hpi-schul-cloud/${{ matrix.repos }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: ${{ matrix.repos }}
+          fetch-depth: 0
+      - working-directory: ${{github.workspace }}/${{ matrix.repos }}
+        shell: bash
+        run: |
+          git checkout ${{ env.git_ref_name }} || true
+          commit_id=$(git rev-parse HEAD)
+          mkdir -pv ansible/group_vars/all
+          ansible_varname=$(echo ${{ matrix.repos }} | tr [a-z] [A-Z] | tr - _ | tr \. _ | tr [:blank:] _ )
+          filename=$(echo ${ansible_varname} | tr [A-Z] [a-z] )
+          reponame=$(echo ${filename} | tr _ - )
+          branch_varname=$(echo ${{ needs.branch_meta.outputs.branch }} | tr -d [:cntrl:]  | tr / \. | tr [:blank:] _ )
+          for i in ${{ env.tenants }}; do
+            mkdir -pv ansible/host_vars/${i}_host
+            echo "${ansible_varname}_IMAGE_TAG: $commit_id" >> ansible/host_vars/${i}_host/$filename.yml
+            echo "${ansible_varname}_BRANCH_NAME: ${branch_varname}" >> ansible/host_vars/${i}_host/$filename.yml
+            echo "${ansible_varname}_REPO_NAME: ${reponame}" >> ansible/host_vars/${i}_host/$filename.yml
+          done
+      - run: tar -cf ${{ matrix.repos }}.tar ansible
+        working-directory: ${{github.workspace }}/${{ matrix.repos }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.repos }}
+          path: ${{github.workspace }}/${{ matrix.repos }}/${{ matrix.repos }}.tar
+
+  create_artifacts_workspaces:
+    runs-on: ubuntu-latest
+    needs:
+      - create_branch_identifier
+    strategy:
+      matrix:
+        tenants: [ dbc ]
+    steps:
+      - shell: bash
+        run: |
+          mkdir -pv ansible/host_vars/${{ matrix.tenants }}_host
+      - shell: bash
+        working-directory: ${{github.workspace }}/ansible/host_vars/${{ matrix.tenants }}_host
+        run: |
+          echo "NAMESPACE: ${{ needs.create_branch_identifier.outputs.id_branch }}" > cfg_host.yml
+          echo "DOMAIN: ${{ needs.create_branch_identifier.outputs.id_branch }}.${{ matrix.tenants }}.dbildungscloud.dev" >> cfg_host.yml
+      - run: tar -cf ${{ matrix.tenants }}.tar ansible
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.tenants }}
+          path: ${{github.workspace }}/${{ matrix.tenants }}.tar
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy dbc
+    needs:
+      - create_artifacts_repos
+      - create_artifacts_workspaces
+    steps:
+      - uses: actions/download-artifact@v4
+      - run: ls -R
+      - run: mv */*.tar ./
+      - run: find -name "*.tar" -exec tar -xf {} \;
+      - run: tar -cf dbc-ansible.tar ansible
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debug-dbc-ansible
+          path: ${{github.workspace }}/dbc-ansible.tar
+          overwrite: true
+      - shell: bash
+        run: |
+          python3 -m pip install kubernetes 'urllib3>=1.26.16'
+
+      - name: TLS
+        working-directory: ${{github.workspace }}/ansible/group_vars
+        run: |
+          echo "TLS_ENABLED: \"true\"" >> develop/dof_deploy.yml
+      - run: ansible-galaxy install -r ansible/collections/requirements.yml
+      - working-directory: ${{github.workspace }}/ansible/roles/sys
+        run: |
+          mkdir files
+          echo "${{ secrets.DEV_KUBE_CONFIG_DBC }}" > files/config
+      # It's necessary for the ansible k8s module to define proxy options as environment vars 
+      # (doesn't use the proxy defined in kubeconfig)
+      # https://github.com/kubernetes-client/python/issues/1862
+      # https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_module.html#parameter-proxy
+      # Format in kubeconfig is <protocoll>://<user>:<password>@<domain>:<port>
+      # Set K8S_AUTH_PROXY=<protocoll>://<domain>:<port>
+      # Set K8S_AUTH_PROXY_HEADERS_PROXY_BASIC_AUTH=<user>:<password>
+      # If proxy-url is not defined in the kubeconfig no variables are set
+      - name: Set proxy environment variable if included in the kubeconfig
+        working-directory: ${{github.workspace }}/ansible/roles/sys/files
+        run: |
+          yq ".clusters[0].cluster.proxy-url" config | sed -nr 's+(.*//).*@(.*)+K8S_AUTH_PROXY=\1\2+p' >> $GITHUB_ENV
+          yq ".clusters[0].cluster.proxy-url" config | sed -nr 's+.*//(.*)@.*+K8S_AUTH_PROXY_HEADERS_PROXY_BASIC_AUTH=\1+p' >> $GITHUB_ENV
+      - run: ansible-playbook ./playbock-operator.yml --inventory-file hosts --limit "dbc_host" -e 'ansible_python_interpreter=/usr/bin/python3'
+        working-directory: ${{github.workspace }}/ansible
+      - working-directory: ${{github.workspace }}/ansible/roles/sys/files
+        run: |
+          rm -rf  /config
