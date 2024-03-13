@@ -1,4 +1,4 @@
- - name: Service
+  - name: Service
     kubernetes.core.k8s:
       kubeconfig: ~/.kube/config 
       namespace: "{{ NAMESPACE }}"
