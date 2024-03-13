@@ -1,17 +1,80 @@
 name: GraalVM build
 on: [push, pull_request]
+
+permissions:
+  contents: read
+
 jobs:
+  branch_meta:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.extract_branch_meta.outputs.branch }}
+      sha: ${{ steps.extract_branch_meta.outputs.sha }}
+    steps:
+      - name: Extract branch meta
+        shell: bash
+        id: extract_branch_meta
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BRANCH_REF_NAME: ${{ github.ref_name}}
+          BRANCH_SHA: ${{ github.sha }}
+        run: |
+          if [ "${{ github.event_name }}" == 'pull_request' ]; then
+            echo "branch=$PR_HEAD_REF" >> $GITHUB_OUTPUT
+            echo "sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
+          else
+            echo "branch=$BRANCH_REF_NAME" >> $GITHUB_OUTPUT
+            echo "sha=$BRANCH_SHA" >> $GITHUB_OUTPUT
+          fi
+  
   build:
     runs-on: ubuntu-latest
+    needs:
+      - branch_meta
+    permissions:
+      packages: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'      # See 'Options' section below for all supported versions
           distribution: 'graalvm' # See 'Options' section below for all available distributions
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta Service Name
+        id: docker_meta_img
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch,enable=false,priority=600
+            type=sha,enable=true,priority=600,prefix=
+
+      - name: test image exists
         run: |
-          ./mvnw install -Dnative
-          ls -la
-          du -h
+          echo "IMAGE_EXISTS=$(docker manifest inspect ghcr.io/${{ github.repository }}:${{ needs.branch_meta.outputs.sha }} > /dev/null && echo 1 || echo 0)" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        if: ${{ env.IMAGE_EXISTS == 0 }}
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push ${{ github.repository }}
+        if: ${{ env.IMAGE_EXISTS == 0 }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./src/main/docker/Dockerfile.native-micro
+          platforms: linux/amd64
+          push: true
+          pull: true
+          tags: ghcr.io/${{ github.repository }}:${{ needs.branch_meta.outputs.sha }}
+          labels: ${{ steps.docker_meta_img.outputs.labels }}
