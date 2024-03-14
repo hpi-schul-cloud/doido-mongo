@@ -1,2 +1,2 @@
 DOIDO_MONGO_REPO_NAME: doido-mongo
-DOIDO_MONGO_IMAGE_NAME:
+DOIDO_MONGO_IMAGE_NAME: ghcr.io/hpi-schul-cloud/doido-mongo

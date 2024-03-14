@@ -39,7 +39,7 @@ spec:
         runAsNonRoot: true
       containers:
       - name: doido-mongo-operator
-        image: {{ DOIDO_MONGO_IMAGE_NAME }}
+        image: {{ DOIDO_MONGO_IMAGE }}:{{ DOIDO_MONGO_IMAGE_TAG }}
         ports:
         - containerPort: 8080
           name: http
