@@ -4,6 +4,9 @@ on: [push, pull_request]
 permissions:
   contents: read
 
+env:
+  tenants: "dbc"
+
 jobs:
   branch_meta:
     runs-on: ubuntu-latest
