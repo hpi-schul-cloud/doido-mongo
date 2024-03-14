@@ -43,7 +43,7 @@ jobs:
           fetch-depth: 0
       - name: build
         run: |
-         ./mvnw package -Dnative -Dquarkus.native.container-build=true
+         ./mvnw install -Dnative -Dquarkus.native.container-build=true
       - name: Login to registry
         uses: docker/login-action@v3
         with:
