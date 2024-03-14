@@ -41,14 +41,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: '21'      # See 'Options' section below for all supported versions
-          distribution: 'graalvm' # See 'Options' section below for all available distributions
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: build
         run: |
-         ./mvnw install -Dnative
+         ./mvnw package -Dnative -Dquarkus.native.container-build=true
       - name: Login to registry
         uses: docker/login-action@v3
         with:
