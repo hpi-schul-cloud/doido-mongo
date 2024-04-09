@@ -18,9 +18,14 @@ jobs:
       - create_branch_identifier
     steps:
       - run: |
-          echo "${{ secrets.DEV_KUBE_CONFIG_DBC }}" > files/config
+          mkdir files
+          echo "${{ secrets.DEV_KUBE_CONFIG_DBC }}" > files/config_dbc
       - name: delete custom resources and namespaces 
         run: |
           branch_identifier='${{ needs.create_branch_identifier.outputs.id_branch }}'
-          kubectl --namespace $branch_identifier delete --ignore-not-found=true --all=true OnePasswordItem
-          kubectl delete --ignore-not-found=true ns $branch_identifier
+          kubectl --kubeconfig=files/config_dbc --namespace $branch_identifier delete --ignore-not-found=true --all=true OnePasswordItem
+          kubectl --kubeconfig=files/config_dbc delete --ignore-not-found=true ns $branch_identifier
+      - name: remove kubeconfig
+        if: ${{ always() }}
+        run: |
+          rm -rf files
