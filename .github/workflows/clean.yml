@@ -1,0 +1,26 @@
+---
+name: Clean Deployment
+
+on: delete
+
+permissions:
+  contents: read
+
+jobs:
+  create_branch_identifier:
+    uses: hpi-schul-cloud/dof_app_deploy/.github/workflows/branch-to-namespace.yml@main
+    with:
+      branch: devops-${{ github.event.ref }}
+
+  clean:
+    runs-on: ubuntu-latest
+    needs:
+      - create_branch_identifier
+    steps:
+      - run: |
+          echo "${{ secrets.DEV_KUBE_CONFIG_DBC }}" > files/config
+      - name: delete custom resources and namespaces 
+        run: |
+          branch_identifier='${{ needs.create_branch_identifier.outputs.id_branch }}'
+          kubectl --namespace $branch_identifier delete --ignore-not-found=true --all=true OnePasswordItem
+          kubectl delete --ignore-not-found=true ns $branch_identifier
