@@ -50,7 +50,7 @@ jobs:
           QUARKUS_TEST_CONTINUOUS_TESTING: enabled
         run: |
          ./mvnw test
-         ls -la
+         ls -laR target
       
       - name: Upload Report
         uses: actions/upload-artifact@v3
