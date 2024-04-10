@@ -52,6 +52,14 @@ jobs:
       - name: build
         run: |
          ./mvnw install -Dnative -Dquarkus.native.container-build=true
+         ls -la
+      
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: my-report
+          path: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
 
       - name: Login to registry
         uses: docker/login-action@v3
