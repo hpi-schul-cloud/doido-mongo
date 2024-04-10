@@ -49,7 +49,7 @@ jobs:
         env:
           QUARKUS_TEST_CONTINUOUS_TESTING: enabled
         run: |
-         ./mvnw quarkus:test
+         ./mvnw test
          ls -la
       
       - name: Upload Report
