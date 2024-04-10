@@ -46,6 +46,8 @@ jobs:
           cache: maven
 
       - name: build
+        env:
+          QUARKUS_TEST_CONTINUOUS_TESTING: enabled
         run: |
          ./mvnw quarkus:test
          ls -la
