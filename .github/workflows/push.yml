@@ -72,6 +72,9 @@ jobs:
           name: my-report-b
       - name: SonarCloud upload coverage
         uses: SonarSource/sonarcloud-github-action@v2.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
