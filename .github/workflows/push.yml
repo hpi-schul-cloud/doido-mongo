@@ -31,6 +31,31 @@ jobs:
             echo "sha=$BRANCH_SHA" >> $GITHUB_OUTPUT
           fi
   
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+
+      - name: run Test
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+        run: |
+         mvn verify sonar:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=schulcloud-verbund \
+          -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
+
+  
+
   build:
     runs-on: ubuntu-latest
     needs:
@@ -52,6 +77,14 @@ jobs:
       - name: build
         run: |
          ./mvnw install -Dnative -Dquarkus.native.container-build=true
+         ls -la
+      
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: my-report
+          path: target/jacoco-report/jacoco.xml
 
       - name: Login to registry
         uses: docker/login-action@v3
