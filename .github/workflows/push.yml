@@ -45,11 +45,14 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: build
+      - name: run Test
         env:
-          QUARKUS_TEST_CONTINUOUS_TESTING: enabled
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: |
-         mvn clean verify sonar:sonar -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+         mvn verify sonar:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=schulcloud-verbund \
+          -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
 
   
 
