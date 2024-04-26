@@ -219,6 +219,12 @@ jobs:
         working-directory: ${{github.workspace }}/ansible/group_vars
         run: |
           echo "TLS_ENABLED: \"true\"" >> develop/dof_deploy.yml
+          
+      - name: 1Password
+        working-directory: ${{github.workspace }}/ansible/group_vars
+        run: |
+          echo "ONEPASSWORD_OPERATOR_VAULT: ${{ secrets.DEV_VAULT_DBC  }}" >> develop/dof_deploy.yml
+
       - run: ansible-galaxy install -r ansible/collections/requirements.yml
       - working-directory: ${{github.workspace }}/ansible/roles/sys
         run: |
