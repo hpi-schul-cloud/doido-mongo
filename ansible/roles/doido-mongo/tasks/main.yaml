@@ -10,7 +10,14 @@
       namespace: "{{ NAMESPACE }}"
       template: deployment.yml.j2
       apply: yes
-      
+
+  - name: http auth secret
+    kubernetes.core.k8s:
+      kubeconfig: ~/.kube/config
+      namespace: "{{ NAMESPACE }}"
+      template: onepassword_basic_auth.yml.j2
+    when: ONEPASSWORD_OPERATOR is defined and ONEPASSWORD_OPERATOR|bool
+
   - name: Ingress
     environment:
       K8S_AUTH_KUBECONFIG: "{{ ansible_env.HOME }}/.kube/config"
