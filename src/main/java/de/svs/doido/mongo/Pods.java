@@ -1,5 +1,8 @@
 package svs.doido.mongo;
-package io.fabric8.kubernetes.client.KubernetesClient;
+
+import io.fabric8.kubernetes.client.KubernetesClient;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.GET;
 
 @Path("/pod")
 public class Pods {
