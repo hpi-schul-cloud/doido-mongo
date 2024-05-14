@@ -10,8 +10,10 @@ import jakarta.inject.Inject;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
+import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.PodBuilder;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured;
 import static org.hamcrest.CoreMatchers.is;
 
 
