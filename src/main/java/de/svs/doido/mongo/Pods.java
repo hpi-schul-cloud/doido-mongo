@@ -3,7 +3,6 @@ package svs.doido.mongo;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;
 import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import java.util.List;
 
