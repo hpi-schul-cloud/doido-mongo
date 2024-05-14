@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import jakarta.inject.Inject;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
