@@ -19,7 +19,7 @@ public class Pods {
 
     @GET
     @Path("/{namespace}")
-    @Produces(MediaType.APPLICATION_JSON)    
+    @Produces(MediaType.TEXT_PLAIN)
     public List<Pod> pods(String namespace) {
         return kubernetesClient.pods().inNamespace(namespace).list().getItems();
     }
