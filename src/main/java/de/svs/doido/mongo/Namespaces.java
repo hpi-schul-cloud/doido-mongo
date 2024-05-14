@@ -6,7 +6,7 @@ import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import java.util.List;
 
-@Path("/namespaces")
+@Path("/namespace")
 public class Namespaces {
 
     private final KubernetesClient kubernetesClient;
@@ -17,7 +17,7 @@ public class Namespaces {
 
     @GET
     @Path("/")
-    public List<Namespace> Namespaces() {
+    public List<Namespace> namespaces() {
         return kubernetesClient.namespaces().list().getItems();
     }
 }
