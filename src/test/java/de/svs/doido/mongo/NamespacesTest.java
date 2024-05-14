@@ -13,7 +13,7 @@ import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 
-import static io.restassured.RestAssured;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
 
 
@@ -40,7 +40,7 @@ class NamespacesTest {
 
     @Test
     public void testInteractionWithAPIServer() {
-        RestAssured.when().get("/pod/test").then()
+        when().get("/pod/test").then()
                 .body("size()", is(2));
     }
 
