@@ -19,7 +19,7 @@ public class Namespaces {
 
     @GET
     @Path("/")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Namespace> namespaces() {
         return kubernetesClient.namespaces().list().getItems();
     }
