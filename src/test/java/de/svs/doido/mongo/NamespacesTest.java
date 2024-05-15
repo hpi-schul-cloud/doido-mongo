@@ -12,6 +12,7 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
+import io.fabric8.kubernetes.api.model.PodListBuilder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -42,7 +43,7 @@ class NamespacesTest {
     public void testInteractionWithAPIServer() {
         given()
             .when().get("/pod/test")
-            .then().body("size()", is(2));
+            .then().body(new PodListBuilder().build().getItems().size(), is(2));
     }
 
 }
