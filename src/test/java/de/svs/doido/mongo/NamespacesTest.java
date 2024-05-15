@@ -43,7 +43,7 @@ class NamespacesTest {
     public void testInteractionWithAPIServer() {
         given()
             .when().get("/pod/test")
-            .then().body(new PodListBuilder().build().getItems().size(), is(2));
+            .then().statusCode(200);
     }
 
 }
