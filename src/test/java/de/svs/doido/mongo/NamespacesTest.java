@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 @WithKubernetesTestServer
 @QuarkusTest
 class NamespacesTest {
-/*
+
     @KubernetesTestServer
     KubernetesServer mockServer;
     @Inject
@@ -44,5 +44,5 @@ class NamespacesTest {
             .when().get("/pod/test")
             .then().body("size()", is(2));
     }
-*/
+
 }
