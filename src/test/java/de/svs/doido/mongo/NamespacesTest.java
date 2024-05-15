@@ -3,7 +3,6 @@ package svs.doido.mongo;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.kubernetes.client.KubernetesTestServer;
 import io.quarkus.test.kubernetes.client.WithKubernetesTestServer;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
@@ -11,9 +10,8 @@ import jakarta.inject.Inject;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
-import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.api.model.PodBuilder;
-import io.fabric8.kubernetes.api.model.PodListBuilder;
+import io.fabric8.kubernetes.api.model.Namespace;
+import io.fabric8.kubernetes.api.model.NamespaceBuilder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -32,36 +30,36 @@ class NamespacesTest {
 
     @BeforeEach
     public void before() {
-        final Pod pod1 = new PodBuilder().withNewMetadata().withName("pod1").withNamespace("test").and().build();
-        final Pod pod2 = new PodBuilder().withNewMetadata().withName("pod2").withNamespace("test").and().build();
+        final Namespace namespace1 = new NamespaceBuilder().withNewMetadata().withName("namespaceA").and().build();
+        final Namespace namespace2 = new NamespaceBuilder().withNewMetadata().withName("namespaceB").and().build();
 
-        // Set up Kubernetes so that our "pretend" pods are created
-        client.pods().resource(pod1).create();
-        client.pods().resource(pod2).create();
+        // Set up Kubernetes so that our "pretend" pods namespaces created
+        client.namespaces().resource(namespace1).create();
+        client.namespaces().resource(namespace2).create();
     }
 
     @AfterEach
     public void after() {
-        final Pod pod1 = new PodBuilder().withNewMetadata().withName("pod1").withNamespace("test").and().build();
-        final Pod pod2 = new PodBuilder().withNewMetadata().withName("pod2").withNamespace("test").and().build();
+        final Namespace namespace1 = new NamespaceBuilder().withNewMetadata().withName("namespaceA").and().build();
+        final Namespace namespace2 = new NamespaceBuilder().withNewMetadata().withName("namespaceB").and().build();
 
-        // Set up Kubernetes so that our "pretend" pods are created
-        client.pods().resource(pod1).delete();
-        client.pods().resource(pod2).delete();
+        // Set up Kubernetes so that our "pretend" namespaces are deleted
+        client.namespaces().resource(namespace1).delete();
+        client.namespaces().resource(namespace2).delete();
     }
 
 
     @Test
-    public void testInteractionWithAPIServer() {
+    public void testInteractionWithAPIServerForNamespaces() {
         given()
-            .when().get("/pod/test")
+            .when().get("/namespace")
             .then().statusCode(200);
     }
 
     @Test
-    public void testInteractionWithAPIServer2() {
+    public void testInteractionWithAPIServerForNamespaces2() {
         given()
-            .when().get("/pod/testB")
+            .when().get("/namespace")
             .then().statusCode(200).body("size()", is(0));
     }
 
