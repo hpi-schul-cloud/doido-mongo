@@ -46,4 +46,11 @@ class NamespacesTest {
             .then().statusCode(200);
     }
 
+    @Test
+    public void testInteractionWithAPIServer2() {
+        given()
+            .when().get("/pod/testB")
+            .then().statusCode(200).body("size()", is(0));
+    }
+
 }
