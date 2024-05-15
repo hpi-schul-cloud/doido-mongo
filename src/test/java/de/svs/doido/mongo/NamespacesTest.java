@@ -46,8 +46,8 @@ class NamespacesTest {
         final Pod pod2 = new PodBuilder().withNewMetadata().withName("pod2").withNamespace("test").and().build();
 
         // Set up Kubernetes so that our "pretend" pods are created
-        client.pods().resource(pod1).deleted();
-        client.pods().resource(pod2).deleted();
+        client.pods().resource(pod1).delet();
+        client.pods().resource(pod2).delet();
     }
 
 
