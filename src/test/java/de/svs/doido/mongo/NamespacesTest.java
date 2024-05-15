@@ -6,6 +6,7 @@ import io.quarkus.test.kubernetes.client.WithKubernetesTestServer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import jakarta.inject.Inject;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
@@ -38,6 +39,17 @@ class NamespacesTest {
         client.pods().resource(pod1).create();
         client.pods().resource(pod2).create();
     }
+
+    @AfterEach
+    public void after() {
+        final Pod pod1 = new PodBuilder().withNewMetadata().withName("pod1").withNamespace("test").and().build();
+        final Pod pod2 = new PodBuilder().withNewMetadata().withName("pod2").withNamespace("test").and().build();
+
+        // Set up Kubernetes so that our "pretend" pods are created
+        client.pods().resource(pod1).deleted();
+        client.pods().resource(pod2).deleted();
+    }
+
 
     @Test
     public void testInteractionWithAPIServer() {
