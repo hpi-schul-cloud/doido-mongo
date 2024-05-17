@@ -28,7 +28,7 @@ public class Namespaces {
         NamespaceList namespacesL = kubernetesClient.namespaces().list();
         Set<String> namespacesNames = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
         for ( Namespace n: namespacesL ) {
-            namespacesNames.add(n)
+            namespacesNames.add(n);
         }
         return namespacesNames;
     }
