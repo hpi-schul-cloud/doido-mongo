@@ -4,7 +4,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import java.util.Collections;
 import java.util.List;
 
 @Path("/namespace")
