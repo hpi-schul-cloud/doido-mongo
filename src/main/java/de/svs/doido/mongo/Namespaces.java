@@ -27,7 +27,7 @@ public class Namespaces {
     @Path("/")
     public List<String> namespaces() {
         NamespaceList namespacesL = kubernetesClient.namespaces().list();
-        List<String> namespacesNames = Collections.newListFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+        List<String> namespacesNames = Collections.emptyList();
         for ( Namespace n: namespacesL.getItems() ) {
             namespacesNames.add(n.getMetadata().getName());
         }
