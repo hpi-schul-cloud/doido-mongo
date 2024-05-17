@@ -50,7 +50,7 @@ class NamespacesTest {
 
 
     @Test
-    public void testInteractionWithAPIServerForNamespaces() {
+    void testInteractionWithAPIServerForNamespaces() {
         given()
             .when().get("/namespace")
             .then()
