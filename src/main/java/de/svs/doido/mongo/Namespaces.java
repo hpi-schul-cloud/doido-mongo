@@ -25,12 +25,7 @@ public class Namespaces {
 
     @GET
     @Path("/")
-    public List<java.lang.String> namespaces() {
-        NamespaceList namespacesL = kubernetesClient.namespaces().list();
-        List<java.lang.String> namespacesNames = Collections.emptyList();
-        for ( Namespace n: namespacesL.getItems() ) {
-            namespacesNames.add(n.getMetadata().getName());
-        }
-        return namespacesNames;
+    public List<Namespace> namespaces() {
+        return kubernetesClient.namespaces().list().getItems();
     }
 }
