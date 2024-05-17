@@ -53,7 +53,9 @@ class PodsTest {
     void testInteractionWithAPIServer() {
         given()
             .when().get("/pod/test")
-            .then().statusCode(200);
+            .then()
+            .statusCode(200)
+            .body("size()", is(2));
     }
 
     @Test
