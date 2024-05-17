@@ -53,7 +53,9 @@ class NamespacesTest {
     public void testInteractionWithAPIServerForNamespaces() {
         given()
             .when().get("/namespace")
-            .then().statusCode(200);
+            .then()
+            .statusCode(200)
+            .body("size()", is(2));
     }
 
 }
