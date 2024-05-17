@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.lang.Iterable;
-import java.lang.String;
 
 @Path("/namespace")
 public class Namespaces {
@@ -26,9 +25,9 @@ public class Namespaces {
 
     @GET
     @Path("/")
-    public List<String> namespaces() {
+    public List<java.lang.String> namespaces() {
         NamespaceList namespacesL = kubernetesClient.namespaces().list();
-        List<String> namespacesNames = Collections.emptyList();
+        List<java.lang.String> namespacesNames = Collections.emptyList();
         for ( Namespace n: namespacesL.getItems() ) {
             namespacesNames.add(n.getMetadata().getName());
         }
