@@ -61,6 +61,10 @@
       <artifactId>quarkus-test-kubernetes-client</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-jackson</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
