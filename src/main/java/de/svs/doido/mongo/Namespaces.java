@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.lang.Iterable;
 
 @Path("/namespace")
 public class Namespaces {
