@@ -2,17 +2,18 @@ package svs.doido.mongo.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Data;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.validator.routines.UrlValidator;
 
 
-@Data
+@ToString
+@EqualsAndHashCode
 public class Configmap {
-
     @Getter
     @Setter
     private String name;
-    
+
     @Getter
     private String uri;
 
