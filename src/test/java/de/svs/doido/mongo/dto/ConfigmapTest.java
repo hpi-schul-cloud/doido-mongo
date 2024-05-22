@@ -17,7 +17,7 @@ class ConfigmapTest {
     @Test
     void testGetterSetterUri() {
         Configmap c = new Configmap();
-        String uri = "https://test.local/de?uir=10";
+        String uri = "ftp://foo.bar.com/";
         c.setUri(uri);
         assertEquals(uri,c.getUri());
     }
