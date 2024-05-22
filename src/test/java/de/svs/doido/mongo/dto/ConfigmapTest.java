@@ -4,6 +4,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @QuarkusTest
 class ConfigmapTest {
@@ -61,14 +62,14 @@ class ConfigmapTest {
     }
 
     @Test
-    void testHashcode() {
+    void testHashcodeB() {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
         c.setName(name);
         c.setUri(uri);
         d.setName(name);
         d.setUri(uri);
-        assertEquals(d.hashCode(), c.hashCode());
+        assertNotEquals(d.hashCode(), c.hashCode());
     }
 
     @Test
