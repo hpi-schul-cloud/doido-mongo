@@ -4,14 +4,20 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import svs.doido.mongo.dto.Configmap;
-
 @QuarkusTest
 class ConfigmapTest {
     @Test
-    void testGetterSetter() {
+    void testGetterSetterName() {
         Configmap c = new Configmap();
         String name = "hausboot";
+        c.setName(name);
+        assertEquals(name,c.getName());
+    }
+
+    @Test
+    void testGetterSetterUri() {
+        Configmap c = new Configmap();
+        String uri = "mongos://test.local/de?uir=10";
         c.setName(name);
         assertEquals(name,c.getName());
     }
