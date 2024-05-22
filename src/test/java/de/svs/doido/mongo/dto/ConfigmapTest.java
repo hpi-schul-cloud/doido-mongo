@@ -22,4 +22,25 @@ class ConfigmapTest {
         assertEquals(uri,c.getUri());
     }
 
+    @Test
+    void testGetterSetterUriFail() {
+        Configmap c = new Configmap();
+        String uri = "proto://foo.bar.com/";
+        c.setUri(uri);
+        assertEquals("",c.getUri());
+    }
+
+    @Test
+    void testToString() {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        c.setName(name);
+        c.setUri(uri);
+        d.setName(name);
+        d.setUri(uri);
+        assertEquals("",c.toString());
+    }
+
 }
