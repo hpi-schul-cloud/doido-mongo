@@ -18,8 +18,8 @@ class ConfigmapTest {
     void testGetterSetterUri() {
         Configmap c = new Configmap();
         String uri = "mongos://test.local/de?uir=10";
-        c.setName(name);
-        assertEquals(name,c.getName());
+        c.setUri(uri);
+        assertEquals(uri,c.getUri());
     }
 
 }
