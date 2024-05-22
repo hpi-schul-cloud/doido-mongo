@@ -5,12 +5,15 @@ import lombok.Setter;
 import lombok.Data;
 import org.apache.commons.validator.routines.UrlValidator;
 
-@Getter
-@Setter
+
 @Data
 public class Configmap {
-    
+
+    @Getter
+    @Setter
     private String name;
+    
+    @Getter
     private String uri;
 
     public void setUri(String uriIn) {
