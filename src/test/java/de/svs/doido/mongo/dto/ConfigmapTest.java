@@ -3,11 +3,18 @@ package svs.doido.mongo.dto;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @QuarkusTest
 class ConfigmapTest {
+    @ToString
+    @EqualsAndHashCode
+    private static testConfigmapClass extends Configmap {
+
+    }
     
     private Configmap c;
     private Configmap d;
@@ -130,4 +137,10 @@ class ConfigmapTest {
         assertEquals( false, c.equals(d));
     }
 
+    @Test
+    void testEquals4() {
+        testConfigmapClass e = new testConfigmapClass();
+        assertEquals( false, c.equals(e));
+        assertEquals( false, e.equals(c));
+    }
 }
