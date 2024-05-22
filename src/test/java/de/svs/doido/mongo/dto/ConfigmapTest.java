@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class ConfigmapTest {
     @ToString
     @EqualsAndHashCode
-    private static testConfigmapClass extends Configmap {
+    public static class testConfigmapClass extends Configmap {
 
     }
     
