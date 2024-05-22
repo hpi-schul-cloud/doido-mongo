@@ -27,7 +27,7 @@ class ConfigmapTest {
         Configmap c = new Configmap();
         String uri = "proto://foo.bar.com/";
         c.setUri(uri);
-        assertEquals("",c.getUri());
+        assertEquals("", c.getUri());
     }
 
     @Test
@@ -40,7 +40,7 @@ class ConfigmapTest {
         c.setUri(uri);
         d.setName(name);
         d.setUri(uri);
-        assertEquals("",c.toString());
+        assertEquals(d.toString(), c.toString());
     }
 
 }
