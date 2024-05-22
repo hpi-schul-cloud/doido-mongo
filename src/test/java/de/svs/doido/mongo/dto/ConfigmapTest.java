@@ -25,7 +25,7 @@ class ConfigmapTest {
     @Test
     void testGetterSetterUriFail() {
         Configmap c = new Configmap();
-        String uri = "proto://foo.bar.com/";
+        String uri = "proto:foo.bar.com/";
         c.setUri(uri);
         assertEquals("", c.getUri());
     }
