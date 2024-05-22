@@ -2,7 +2,7 @@ package svs.doido.mongo.dto;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions.assertEquals;
 
 import svs.doido.mongo.dto.Configmap;
 
