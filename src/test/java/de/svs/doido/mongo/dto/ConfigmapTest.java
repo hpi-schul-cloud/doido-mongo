@@ -54,9 +54,19 @@ class ConfigmapTest {
     void testHashcode() {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
+        assertEquals(d.toString(), c.toString());
         c.setName(name);
+        assertNotEquals(d.hashCode(), c.hashCode());
         c.setUri(uri);
+        assertNotEquals(d.hashCode(), c.hashCode());
         d.setName(name);
+        assertNotEquals(d.hashCode(), c.hashCode());
+        d.setUri(uri);
+        assertEquals(d.toString(), c.toString());
+        d.setName("mu");
+        assertNotEquals(d.hashCode(), c.hashCode());
+        d.setName(name);
+        d.setUri("mongo://uri.foo.bar.com/?uir=a");
         assertNotEquals(d.hashCode(), c.hashCode());
     }
 
@@ -75,74 +85,47 @@ class ConfigmapTest {
     void testEquals () {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
+        assertEquals( true, d.equals(c));
         c.setName(name);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
         c.setUri(uri);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
         d.setName(name);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
         d.setUri(uri);
         assertEquals( true, d.equals(c));
+        assertEquals( true, c.equals(d));
     }
 
     @Test
     void testEquals2 () {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
-        String uri2 = "proto://foo.bar.com/";
-        String name2 = "hausboot2";
+        assertEquals( true, d.equals(c));
         c.setName(name);
+        d.setName(name);
+        assertEquals( true, d.equals(c));
+        assertEquals( true, c.equals(d));
         c.setUri(uri);
-        d.setName(name2);
-        d.setUri(uri2);
         assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
     }
 
     @Test
-    void testEqualsEmpty () {
-        assertEquals( true, d.equals(c));
-    }
-
-    @Test
-    void testEqualsEmptyAndNot () {
-        String uri2 = "proto://foo.bar.com/";
-        String name2 = "hausboot2";
-        d.setName(name2);
-        d.setUri(uri2);
-        assertEquals( false, d.equals(c));
-    }
-
-    @Test
-    void testEqualsEmptyAndNotUri () {
-        String uri2 = "proto://foo.bar.com/";
-        String name2 = "hausboot2";
-        c.setName(name2);
-        d.setName(name2);
-        d.setUri(uri2);
-        assertEquals( false, d.equals(c));
-    }
-
-    @Test
-    void testEqualsEmptyAndNotName () {
-        String uri2 = "proto://foo.bar.com/";
-        String name2 = "hausboot2";
-        d.setName(name2);
-        c.setUri(uri2);
-        d.setUri(uri2);
-        assertEquals( false, d.equals(c));
-    }
-
-    @Test
-    void testEqualsNoUri () {
+    void testEquals3 () {
+        String uri = "proto://foo.bar.com/";
         String name = "hausboot";
-        c.setUri(name);
-        d.setUri(name);
         assertEquals( true, d.equals(c));
-    }
-
-    @Test
-    void testEqualsUriNotPass () {
-        String uri = "proto:foo.bar.com/";
         c.setUri(uri);
         d.setUri(uri);
         assertEquals( true, d.equals(c));
+        assertEquals( true, c.equals(d));
+        c.setName(name);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
     }
 
 }
