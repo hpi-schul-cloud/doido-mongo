@@ -69,4 +69,57 @@ class ConfigmapTest {
         assertEquals( true, d.equals(c));
     }
 
+    @Test
+    void testEquals2 () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        String uri2 = "proto://foo.bar.com/";
+        String name2 = "hausboot2";
+        c.setName(name);
+        c.setUri(uri);
+        d.setName(name2);
+        d.setUri(uri2);
+        assertEquals( false, d.equals(c));
+    }
+
+    @Test
+    void testEqualsEmpty () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        assertEquals( true, d.equals(c));
+    }
+
+    @Test
+    void testEqualsEmptyAndNot () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri2 = "proto://foo.bar.com/";
+        String name2 = "hausboot2";
+        d.setName(name2);
+        d.setUri(uri2);
+        assertEquals( true, d.equals(c));
+    }
+
+    @Test
+    void testEqualsNoUri () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String name = "hausboot";
+        c.setUri(name);
+        d.setUri(name);
+        assertEquals( true, d.equals(c));
+    }
+
+    @Test
+    void testEqualsUriNotPass () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri = "proto:foo.bar.com/";
+        c.setUri(uri);
+        d.setUri(uri);
+        assertEquals( true, d.equals(c));
+    }
+
 }
