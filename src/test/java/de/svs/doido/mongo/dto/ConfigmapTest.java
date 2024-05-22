@@ -99,7 +99,7 @@ class ConfigmapTest {
         String name2 = "hausboot2";
         d.setName(name2);
         d.setUri(uri2);
-        assertEquals( true, d.equals(c));
+        assertEquals( false, d.equals(c));
     }
 
     @Test
