@@ -14,7 +14,7 @@ public class Configmap {
     private String uri;
 
     public void setUri(String uriIn) {
-        UrlValidator urlValidator = new UrlValidator( ALLOW_ALL_SCHEMES );
+        UrlValidator urlValidator = new UrlValidator( UrlValidator.ALLOW_ALL_SCHEMES );
         if (urlValidator.isValid( uriIn )) {
             uri = uriIn;
         }
