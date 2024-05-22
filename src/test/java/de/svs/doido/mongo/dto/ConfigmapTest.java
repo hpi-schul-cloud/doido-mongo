@@ -43,4 +43,30 @@ class ConfigmapTest {
         assertEquals(d.toString(), c.toString());
     }
 
+    @Test
+    void testHashcode() {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        c.setName(name);
+        c.setUri(uri);
+        d.setName(name);
+        d.setUri(uri);
+        assertEquals(d.hashCode(), c.hashCode());
+    }
+
+    @Test
+    void testEquals () {
+        Configmap c = new Configmap();
+        Configmap d = new Configmap();
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        c.setName(name);
+        c.setUri(uri);
+        d.setName(name);
+        d.setUri(uri);
+        assertEquals( true, d.equals(c));
+    }
+
 }
