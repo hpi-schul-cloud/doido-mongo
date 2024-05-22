@@ -57,8 +57,7 @@ class ConfigmapTest {
         c.setName(name);
         c.setUri(uri);
         d.setName(name);
-        d.setUri(uri);
-        assertEquals(d.hashCode(), c.hashCode());
+        assertNotEquals(d.hashCode(), c.hashCode());
     }
 
     @Test
@@ -69,7 +68,7 @@ class ConfigmapTest {
         c.setUri(uri);
         d.setName(name);
         d.setUri(uri);
-        assertNotEquals(d.hashCode(), c.hashCode());
+        assertEquals(d.hashCode(), c.hashCode());
     }
 
     @Test
