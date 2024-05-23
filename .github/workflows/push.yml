@@ -53,21 +53,13 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=schulcloud-verbund \
           -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
-      - run: find . -name "Configmap.*" 
       
       - name: Upload Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: my-report
-          path: target/jacoco-report/jacoco.xml
-      
-      - name: Upload Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: html-report
-          path: target/jacoco-report/svs.doido.mongo.dto
+          name: report
+          path: target/jacoco-report
 
   
 
