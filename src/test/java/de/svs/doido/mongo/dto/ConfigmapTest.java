@@ -82,7 +82,7 @@ class ConfigmapTest {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
         assertEquals(c.hashCode(), c.hashCode());
-        assertNotEquals(sub.hashCode(), c.hashCode());c
+        assertNotEquals(sub.hashCode(), c.hashCode());
         c.setName(name);
         assertNotEquals(sub.hashCode(), c.hashCode());
         c.setUri(uri);
