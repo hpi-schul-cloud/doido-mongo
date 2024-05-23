@@ -12,10 +12,10 @@ import org.apache.commons.validator.routines.UrlValidator;
 public final class Configmap {
     @Getter
     @Setter
-    private String name = "";
+    private final String name = "";
 
     @Getter
-    private String uri = "";
+    private final String uri = "";
 
     public void setUri(String uriIn) {
         UrlValidator urlValidator = new UrlValidator( UrlValidator.ALLOW_ALL_SCHEMES|UrlValidator.ALLOW_LOCAL_URLS );
