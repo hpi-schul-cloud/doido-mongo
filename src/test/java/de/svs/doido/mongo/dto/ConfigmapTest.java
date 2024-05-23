@@ -3,18 +3,12 @@ package svs.doido.mongo.dto;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
+import nl.jqno.equalsverifier.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @QuarkusTest
 class ConfigmapTest {
-    @ToString
-    @EqualsAndHashCode(callSuper=false)
-    public static class testConfigmapClass extends Configmap {
-
-    }
     
     private Configmap c;
     private Configmap d;
@@ -58,91 +52,7 @@ class ConfigmapTest {
     }
 
     @Test
-    void testHashcode() {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        assertNotEquals(d.hashCode(), (new Object()).hashCode());
-        assertEquals(d.hashCode(), c.hashCode());
-        c.setName(name);
-        assertNotEquals(d.hashCode(), c.hashCode());
-        c.setUri(uri);
-        assertNotEquals(d.hashCode(), c.hashCode());
-        d.setName(name);
-        assertNotEquals(d.hashCode(), c.hashCode());
-        d.setUri(uri);
-        assertEquals(d.hashCode(), c.hashCode());
-        d.setName(name);
-        d.setUri("mongo://uri.foo.bar.com/?uir=a");
-        assertNotEquals(d.hashCode(), c.hashCode());
-    }
-
-    @Test
-    void testEqualsEmpty () {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        assertEquals( true, c.equals(c));
-        assertEquals( true, d.equals(c));
-    }
-
-    @Test
-    void testEqualsObject () {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        d.setName(name);
-        d.setUri(uri);
-        assertEquals( false, c.equals(new Object()));
-        assertEquals( false, d.equals(new Object()));
-    }
-
-    @Test
-    void testEqualsName () {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        c.setName(name);
-        assertEquals( false, d.equals(c));
-        assertEquals( false, c.equals(d));
-        d.setName(name);
-        assertEquals( true, d.equals(c));
-        assertEquals( true, c.equals(d));
-    }
-
-    @Test
-    void testEqualsUri () {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        c.setUri(uri);
-        assertEquals( false, d.equals(c));
-        assertEquals( false, c.equals(d));
-        d.setUri(uri);
-        assertEquals( true, d.equals(c));
-        assertEquals( true, c.equals(d));
-    }
-
-    @Test
-    void testEqualsUriHttps () {
-        String uri = "https://foo.bar.com/";
-        String name = "hausboot";
-        c.setUri(uri);
-        assertEquals( false, d.equals(c));
-        assertEquals( false, c.equals(d));
-        d.setUri(uri);
-        assertEquals( true, d.equals(c));
-        assertEquals( true, c.equals(d));
-    }
-
-    @Test
-    void testEqualsNameUri () {
-        String uri = "proto://foo.bar.com/";
-        String name = "hausboot";
-        c.setUri(uri);
-        c.setName(name);
-        assertEquals( false, d.equals(c));
-        assertEquals( false, c.equals(d));
-        d.setUri(uri);
-        assertEquals( false, d.equals(c));
-        assertEquals( false, c.equals(d));
-        d.setName(name);
-        assertEquals( true, d.equals(c));
-        assertEquals( true, c.equals(d));
+    void testHashcodeAndEquals() {
+        EqualsVerifier.forClass(Configmap.class).verify();
     }
 }
