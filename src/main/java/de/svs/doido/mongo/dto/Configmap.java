@@ -8,14 +8,13 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 
 @ToString
-@EqualsAndHashCode(callSuper=false)
-public final class Configmap {
+public class Configmap {
     @Getter
     @Setter
-    private final String name = "";
+    private String name = "";
 
     @Getter
-    private final String uri = "";
+    private String uri = "";
 
     public void setUri(String uriIn) {
         UrlValidator urlValidator = new UrlValidator( UrlValidator.ALLOW_ALL_SCHEMES|UrlValidator.ALLOW_LOCAL_URLS );
