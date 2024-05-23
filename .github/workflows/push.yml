@@ -61,6 +61,13 @@ jobs:
         with:
           name: my-report
           path: target/jacoco-report/jacoco.xml
+      
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: html-report
+          path: target/jacoco-report/svs.doido.mongo.dto
 
   
 
