@@ -8,6 +8,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 
 @ToString
+@EqualsAndHashCode
 public class Configmap {
     @Getter
     @Setter
