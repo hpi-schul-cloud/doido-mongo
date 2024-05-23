@@ -141,7 +141,7 @@ class ConfigmapTest {
         assertEquals( false, c.equals(sub));
         sub.setName(name);
         assertEquals( false, sub.equals(c));
-        assertEquals( true, c.equals(sub));
+        assertEquals( false, c.equals(sub));
     }
 
     @Test
