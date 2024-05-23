@@ -4,13 +4,14 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @QuarkusTest
 class ConfigmapTest {
     @ToString
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper=false)
     public static class testConfigmapClass extends Configmap {
 
     }
