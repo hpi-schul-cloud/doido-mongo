@@ -136,7 +136,7 @@ class ConfigmapTest {
         d.setUri(uri);
         assertEquals( false, d.equals(c));
         assertEquals( false, c.equals(d));
-        c.setName(name);
+        d.setName(name);
         assertEquals( true, d.equals(c));
         assertEquals( true, c.equals(d));
     }
