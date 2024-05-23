@@ -61,9 +61,14 @@ class ConfigmapTest {
     void testHashcode() {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
+        assertNotEquals(d.hashCode(), (new Object()).hashCode());
+        assertEquals(d.hashCode(), c.hashCode());
         c.setName(name);
+        assertNotEquals(d.hashCode(), c.hashCode());
         c.setUri(uri);
+        assertNotEquals(d.hashCode(), c.hashCode());
         d.setName(name);
+        assertNotEquals(d.hashCode(), c.hashCode());
         d.setUri(uri);
         assertEquals(d.hashCode(), c.hashCode());
         d.setName(name);
