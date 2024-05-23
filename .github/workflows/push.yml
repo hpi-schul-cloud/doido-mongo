@@ -53,6 +53,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=schulcloud-verbund \
           -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
+      - run: find -name "Configmap.java"
       
       - name: Upload Report
         uses: actions/upload-artifact@v4
