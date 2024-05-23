@@ -53,6 +53,11 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=schulcloud-verbund \
           -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
+      - name: ls repost
+        run: |
+         ls -la target/site/jacoco/jacoco.xml
+         ls -la target/site/jacoco-it/jacoco.xml 
+         ls -la build/reports/jacoco/test/jacocoTestReport.xml
 
   
 
