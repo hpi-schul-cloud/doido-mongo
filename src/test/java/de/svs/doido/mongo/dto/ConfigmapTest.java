@@ -48,6 +48,20 @@ class ConfigmapTest {
     }
 
     @Test
+    void testGetterSetterSubName() {
+        String name = "hausboot";
+        sub.setName(name);
+        assertEquals(name,sub.getName());
+    }
+
+    @Test
+    void testGetterSetterSubUri() {
+        String uri = "proto://foo.bar.com/";
+        sub.setUri(uri);
+        assertEquals(uri,sub.getUri());
+    }
+
+    @Test
     void testGetterSetterUriFail() {
         String uri = "proto:foo.bar.com/";
         c.setUri(uri);
