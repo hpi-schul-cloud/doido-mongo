@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -12,8 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class ConfigmapTest {
     @ToString
     @EqualsAndHashCode(callSuper=true)
+    @Getter
+    @Setter
     public static class testConfigmapClass extends Configmap {
-
+        public testConfigmapClass() {
+            super();
+        }
     }
     
     private Configmap c;
