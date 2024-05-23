@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @QuarkusTest
 class ConfigmapTest {
     @ToString
-    @EqualsAndHashCode(callSuper=false)
+    @EqualsAndHashCode(callSuper=true)
     public static class testConfigmapClass extends Configmap {
 
     }
@@ -102,9 +102,14 @@ class ConfigmapTest {
     void testEqualsEmpty () {
         assertEquals( true, c.equals(c));
         assertEquals( true, d.equals(c));
-        assertEquals( true, c.equals(sub));
-        assertEquals( true, sub.equals(c));
     }
+
+    @Test
+    void testEqualsEmpty () {
+        assertEquals( false, c.equals(sub));
+        assertEquals( false, sub.equals(c));
+    }
+
 
     @Test
     void testEqualsObject () {
@@ -129,8 +134,8 @@ class ConfigmapTest {
         sub.setName(name);
         assertEquals( true, d.equals(c));
         assertEquals( true, c.equals(d));
-        assertEquals( false, sub.equals(c));
-        assertEquals( false, c.equals(sub));
+        assertEquals( true, sub.equals(c));
+        assertEquals( true, c.equals(sub));
     }
 
     @Test
