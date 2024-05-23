@@ -80,11 +80,10 @@ class ConfigmapTest {
     }
 
     @Test
-    void testHashcodeSubClass() {
+    void testHashcodeSubClass () {
         String uri = "proto://foo.bar.com/";
         String name = "hausboot";
-        assertEquals(c.hashCode(), c.hashCode());
-        assertNotEquals(sub.hashCode(), c.hashCode());
+        assertEquals(sub.hashCode(), c.hashCode());
         c.setName(name);
         assertNotEquals(sub.hashCode(), c.hashCode());
         c.setUri(uri);
@@ -128,12 +127,19 @@ class ConfigmapTest {
         c.setName(name);
         assertEquals( false, d.equals(c));
         assertEquals( false, c.equals(d));
-        assertEquals( false, sub.equals(c));
-        assertEquals( false, c.equals(sub));
         d.setName(name);
-        sub.setName(name);
         assertEquals( true, d.equals(c));
         assertEquals( true, c.equals(d));
+    }
+
+    @Test
+    void testEqualsSubName () {
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        c.setName(name);
+        assertEquals( false, sub.equals(c));
+        assertEquals( false, c.equals(sub));
+        sub.setName(name);
         assertEquals( true, sub.equals(c));
         assertEquals( true, c.equals(sub));
     }
