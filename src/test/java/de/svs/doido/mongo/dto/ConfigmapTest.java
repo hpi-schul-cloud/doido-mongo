@@ -70,4 +70,25 @@ class ConfigmapTest {
         d.setUri("mongo://uri.foo.bar.com/?uir=a");
         assertNotEquals(d.hashCode(), c.hashCode());
     }
+
+    @Test
+    void testEquals () {
+        String uri = "proto://foo.bar.com/";
+        String name = "hausboot";
+        assertEquals( true, c.equals(c));
+        assertEquals( true, d.equals(c));
+        c.setName(name);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
+        c.setUri(uri);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
+        d.setName(name);
+        assertEquals( false, d.equals(c));
+        assertEquals( false, c.equals(d));
+        d.setUri(uri);
+        assertEquals( true, d.equals(c));
+        assertEquals( true, c.equals(d));
+        assertEquals( false, c.equals(new Object()));
+    }
 }
