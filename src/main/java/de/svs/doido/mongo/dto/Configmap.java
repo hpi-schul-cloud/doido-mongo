@@ -9,7 +9,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 @ToString
 @EqualsAndHashCode(callSuper=false)
-public class Configmap {
+public final class Configmap {
     @Getter
     @Setter
     private String name = "";
