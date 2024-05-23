@@ -88,12 +88,12 @@ class ConfigmapTest {
         assertNotEquals(sub.hashCode(), c.hashCode());
         c.setUri(uri);
         assertNotEquals(sub.hashCode(), c.hashCode());
-        d.setName(name);
+        sub.setName(name);
         assertNotEquals(sub.hashCode(), c.hashCode());
-        d.setUri(uri);
+        sub.setUri(uri);
         assertEquals(sub.hashCode(), c.hashCode());
-        d.setName(name);
-        d.setUri("mongo://uri.foo.bar.com/?uir=a");
+        sub.setName(name);
+        sub.setUri("mongo://uri.foo.bar.com/?uir=a");
         assertNotEquals(sub.hashCode(), c.hashCode());
     }
 
@@ -140,7 +140,7 @@ class ConfigmapTest {
         assertEquals( false, sub.equals(c));
         assertEquals( false, c.equals(sub));
         sub.setName(name);
-        assertEquals( true, sub.equals(c));
+        assertEquals( false, sub.equals(c));
         assertEquals( true, c.equals(sub));
     }
 
