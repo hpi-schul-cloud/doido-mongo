@@ -105,7 +105,7 @@ class ConfigmapTest {
     }
 
     @Test
-    void testEqualsEmpty () {
+    void testEqualsEmptySub () {
         assertEquals( false, c.equals(sub));
         assertEquals( false, sub.equals(c));
     }
