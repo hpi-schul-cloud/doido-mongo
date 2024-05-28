@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.enterprise.context.RequestScoped;
 
 
+@RequestScoped
 public class Read {
 
     @Inject
