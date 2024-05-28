@@ -9,7 +9,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 @ToString
 @EqualsAndHashCode
-public class Configmap {
+@RequestScoped
+public class ConfigmapDTO {
     @Getter
     @Setter
     private String name = "";

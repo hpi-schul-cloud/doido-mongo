@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 class ConfigmapTest {
     
-    private Configmap c;
+    private ConfigmapDTO c;
 
     @BeforeEach
     public void before() {
-        c = new Configmap();
+        c = new ConfigmapDTO();
     }
 
     @Test
