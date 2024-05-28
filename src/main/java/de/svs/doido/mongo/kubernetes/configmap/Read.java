@@ -8,8 +8,6 @@ import jakarta.enterprise.context.RequestScoped;
 
 
 public class Read {
-    
-    private final KubernetesClient kubernetesClient;
 
     @Inject
     Configmap cfg;
