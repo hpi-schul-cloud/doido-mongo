@@ -11,12 +11,12 @@ public class Read {
     private final KubernetesClient kubernetesClient;
 
     @Inject
-    Configmap cfg;
+    ConfigmapDTO cfg;
 
     @Inject
     KubernetesClient client;
 
-    public Configmap readConfigmap() {
+    public ConfigmapDTO readConfigmap() {
         return cfg;
     }
 }
