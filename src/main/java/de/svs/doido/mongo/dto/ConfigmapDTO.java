@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.validator.routines.UrlValidator;
+import jakarta.enterprise.context.RequestScoped;
 
 
 @ToString
