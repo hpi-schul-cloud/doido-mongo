@@ -11,7 +11,7 @@ import jakarta.enterprise.context.RequestScoped;
 @ToString
 @EqualsAndHashCode
 @RequestScoped
-public class ConfigmapDTO {
+public class Configmap {
     @Getter
     @Setter
     private String name = "";
