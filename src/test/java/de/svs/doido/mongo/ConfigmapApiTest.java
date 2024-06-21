@@ -75,5 +75,14 @@ class ConfigmapApiTest {
             .then()
             .statusCode(204);
     }
+    
+
+    @Test
+    void testInteractionWithPostConfigmapsExistAndNoLabels() {
+        given()
+            .when().post("/configmap/namespaceA/test")
+            .then()
+            .statusCode(403);
+    }
 
 }
