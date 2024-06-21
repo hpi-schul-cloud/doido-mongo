@@ -45,7 +45,7 @@ public class Write {
             meta = configmap.getMetadata();
             meta.setLabels(labels);
             configmap.setMetadata(meta);
-            client.resource(configmap).create();
+            client.resource().create(configmap);
         }
     }
 }
