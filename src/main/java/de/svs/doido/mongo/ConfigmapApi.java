@@ -32,7 +32,7 @@ public class ConfigmapApi {
     public void configmapsWrite(String namespace, String configmapName) {
         Configmap cfg = new Configmap();
         cfg.setName(configmapName);
-        cfg.setUri("http://www.test.org";)
+        cfg.setUri("http://www.test.org");
         cfgWrite.writeConfigmap(namespace,configmapName,cfg);
     }
 }
