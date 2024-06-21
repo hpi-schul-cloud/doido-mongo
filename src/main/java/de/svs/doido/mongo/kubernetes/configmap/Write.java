@@ -17,7 +17,7 @@ public class Write {
     @Inject
     KubernetesClient client;
 
-    public boolean writeConfigmap(String namespace, String name, Configmap cfg) {
+    public boolean writeConfigmap(String namespace, Configmap cfg) {
         ConfigMap configmap = client.configMaps().inNamespace(namespace).withName(cfg.getName()).get();
         Map<String,String> labels;
         Map<String,String> data;
@@ -40,8 +40,8 @@ public class Write {
             }
         }
         else {
-            labels = new HashMap<String,String>();
-            data = new HashMap<String,String>();
+            labels = new HashMap<>();
+            data = new HashMap<>();
             labels.put("app.kubernetes.io/name", "doido-mongo");
             data.put("uri", cfg.getUri());
             configmap = new ConfigMapBuilder().withNewMetadata().withName(cfg.getName()).withNamespace(namespace).and().build();

@@ -35,7 +35,7 @@ public class ConfigmapApi {
         Configmap cfg = new Configmap();
         cfg.setName(configmapName);
         cfg.setUri("http://www.test.org");
-        if( !cfgWrite.writeConfigmap(namespace,configmapName,cfg) ) {
+        if( !cfgWrite.writeConfigmap(namespace,cfg) ) {
             throw new ForbiddenException();
         }
 
