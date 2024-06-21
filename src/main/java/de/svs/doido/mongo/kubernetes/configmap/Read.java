@@ -18,7 +18,7 @@ public class Read {
     KubernetesClient client;
 
     public Configmap readConfigmap(String namespace, String name) {
-        ConfigMap configmap = client.configMaps().inNamespace(namespace).withName(name);
+        ConfigMap configmap = client.configMaps().inNamespace(namespace).withName(name).get();
         cfg.setName(configmap.getMetadata().getName());
         cfg.setUri(confgimap.getData().get("uri"));
         return cfg;

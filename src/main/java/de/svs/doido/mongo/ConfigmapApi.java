@@ -25,7 +25,7 @@ public class ConfigmapApi {
     @GET
     @Path("/{namespace}/{configmapName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Configmap ConfigmapApi(String nameespac, String configmapName) {
+    public Configmap ConfigmapApi(String nameespace, String configmapName) {
         return kubernetesClient.pods().inNamespace(namespace).list().getItems();
     }
 }
