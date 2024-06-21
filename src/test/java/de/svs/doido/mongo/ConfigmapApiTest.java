@@ -69,7 +69,7 @@ class ConfigmapApiTest {
         given()
             .when().post("/configmap/namespaceA/tes2t")
             .then()
-            .statusCode(200)
+            .statusCode(200);
     }
 
 }
