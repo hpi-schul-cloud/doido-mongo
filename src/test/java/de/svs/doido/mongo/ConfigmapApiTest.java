@@ -15,7 +15,7 @@ import io.fabric8.kubernetes.api.model.NamespaceBuilder;
 import io.fabric8.kubernetes.api.model.ConfigMap;
 import io.fabric8.kubernetes.api.model.ConfigMapBuilder;
 
-import java.lang.HashMap;
+import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
