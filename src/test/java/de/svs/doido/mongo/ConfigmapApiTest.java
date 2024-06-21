@@ -52,7 +52,7 @@ class ConfigmapApiTest {
 
         // Set up Kubernetes so that our "pretend" namespaces are deleted
         client.namespaces().resource(namespace1).delete();
-        for ( ConfigMapList cfg : client.configMaps().resource().list()) {
+        for ( ConfigMapList cfg : client.configMaps().list()) {
             client.configMaps().resource(cfg).delete();
         }
     }
