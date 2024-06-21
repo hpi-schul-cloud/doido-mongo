@@ -55,12 +55,21 @@ class ConfigmapApiTest {
 
 
     @Test
-    void testInteractionWithAPIServerForConfigmaps() {
+    void testInteractionWithGetConfigmaps() {
         given()
             .when().get("/configmap/namespaceA/test")
             .then()
             .statusCode(200)
             .body("size()", is(2));
+    }
+    
+
+    @Test
+    void testInteractionWithPostConfigmaps1() {
+        given()
+            .when().post("/configmap/namespaceA/tes2t")
+            .then()
+            .statusCode(200)
     }
 
 }
