@@ -53,6 +53,13 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=schulcloud-verbund \
           -Dsonar.projectKey=hpi-schul-cloud_doido-mongo
+      
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report
+          path: target/jacoco-report
 
   
 
@@ -78,13 +85,6 @@ jobs:
         run: |
          ./mvnw install -Dnative -Dquarkus.native.container-build=true
          ls -la
-      
-      - name: Upload Report
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: my-report
-          path: target/jacoco-report/jacoco.xml
 
       - name: Login to registry
         uses: docker/login-action@v3
