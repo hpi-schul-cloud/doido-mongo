@@ -20,7 +20,7 @@ public class Read {
     public Configmap readConfigmap(String namespace, String name) {
         ConfigMap configmap = client.configMaps().inNamespace(namespace).withName(name).get();
         cfg.setName(configmap.getMetadata().getName());
-        cfg.setUri(confgimap.getData().get("uri"));
+        cfg.setUri(configmap.getData().get("uri"));
         return cfg;
     }
 }
