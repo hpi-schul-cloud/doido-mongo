@@ -5,6 +5,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.sse.OutboundSseEvent;
+import jakarta.ws.rs.ForbiddenException;
 import jakarta.inject.Inject;
 import svs.doido.mongo.dto.Configmap;
 import svs.doido.mongo.kubernetes.configmap.Read;
@@ -33,6 +35,9 @@ public class ConfigmapApi {
         Configmap cfg = new Configmap();
         cfg.setName(configmapName);
         cfg.setUri("http://www.test.org");
-        cfgWrite.writeConfigmap(namespace,configmapName,cfg);
+        if( !cfgWrite.writeConfigmap(namespace,configmapName,cfg) ) {
+            throw new ForbiddenException();
+        }
+
     }
 }

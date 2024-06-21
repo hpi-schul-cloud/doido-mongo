@@ -17,7 +17,7 @@ public class Write {
     @Inject
     KubernetesClient client;
 
-    public void writeConfigmap(String namespace, String name, Configmap cfg) {
+    public boolean writeConfigmap(String namespace, String name, Configmap cfg) {
         ConfigMap configmap = client.configMaps().inNamespace(namespace).withName(cfg.getName()).get();
         Map<String,String> labels;
         Map<String,String> data;
@@ -33,6 +33,10 @@ public class Write {
                 data.put("uri", cfg.getUri());
                 configmap.setData(data);
                 client.configMaps().createOrReplace(configmap);
+                return true;
+            }
+            else {
+                return false;
             }
         }
         else {
@@ -46,6 +50,7 @@ public class Write {
             meta.setLabels(labels);
             configmap.setMetadata(meta);
             client.configMaps().create(configmap);
+            return true;
         }
     }
 }
