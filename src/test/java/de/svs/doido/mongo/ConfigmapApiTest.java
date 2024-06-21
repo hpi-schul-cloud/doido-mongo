@@ -48,9 +48,11 @@ class ConfigmapApiTest {
     @AfterEach
     public void after() {
         final Namespace namespace1 = new NamespaceBuilder().withNewMetadata().withName("namespaceA").and().build();
+        final ConfigMap cfgTest = new ConfigMapBuilder().withNewMetadata().withName("test").withNamespace("namespaceA").and().build();
 
         // Set up Kubernetes so that our "pretend" namespaces are deleted
         client.namespaces().resource(namespace1).delete();
+        client.configMaps().resource(cfgTest).delete();
     }
 
 
