@@ -15,7 +15,9 @@ import io.fabric8.kubernetes.api.model.NamespaceBuilder;
 import io.fabric8.kubernetes.api.model.ConfigMap;
 import io.fabric8.kubernetes.api.model.ConfigMapList;
 import io.fabric8.kubernetes.api.model.ConfigMapBuilder;
+import io.fabric8.kubernetes.api.model.ObjectMeta;
 
+import java.util.Map;
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
@@ -83,6 +85,23 @@ class ConfigmapApiTest {
             .when().post("/configmap/namespaceA/test")
             .then()
             .statusCode(403);
+    }
+    
+
+    @Test
+    void testInteractionWithPostConfigmapsExistAndLabels() {
+        ConfigMap configmap = new ConfigMapBuilder().withNewMetadata().withName("test3").withNamespace("namespaceA").and().build();
+        Map<String,String> labels = new HashMap<>();
+        ObjectMeta meta;
+        labels.put("app.kubernetes.io/name", "doido-mongo");
+        meta = configmap.getMetadata();
+        meta.setLabels(labels);
+        configmap.setMetadata(meta);
+        client.configMaps().create(configmap);
+        given()
+            .when().post("/configmap/namespaceA/test3")
+            .then()
+            .statusCode(204);
     }
 
 }
