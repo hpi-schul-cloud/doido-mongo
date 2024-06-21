@@ -8,7 +8,7 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import java.util.List;
 import jakarta.inject.Inject;
 import svs.doido.mongo.dto.Configmap;
-import svs.doido.mongo.kubernetes.Configmap.Read;
+import svs.doido.mongo.kubernetes.configmap.Read;
 
 @Path("/configmap")
 public class ConfigmapApi {
