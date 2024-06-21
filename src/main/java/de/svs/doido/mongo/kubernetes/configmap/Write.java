@@ -32,7 +32,7 @@ public class Write {
                 data = configmap.getData();
                 data.put("uri", cfg.getUri());
                 configmap.setData(data);
-                client.resource(configmap).createOrReplace();
+                client.configMaps().createOrReplace(configmap);
             }
         }
         else {
@@ -45,7 +45,7 @@ public class Write {
             meta = configmap.getMetadata();
             meta.setLabels(labels);
             configmap.setMetadata(meta);
-            client.resource().create(configmap);
+            client.configMaps().create(configmap);
         }
     }
 }
