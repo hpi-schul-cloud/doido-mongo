@@ -103,5 +103,22 @@ class ConfigmapApiTest {
             .then()
             .statusCode(204);
     }
+    
+
+    @Test
+    void testInteractionWithPostConfigmapsExistAndLabelsWrong() {
+        ConfigMap configmap = new ConfigMapBuilder().withNewMetadata().withName("test3").withNamespace("namespaceA").and().build();
+        Map<String,String> labels = new HashMap<>();
+        ObjectMeta meta;
+        labels.put("app.kubernetes.io/name", "doido-mongoB");
+        meta = configmap.getMetadata();
+        meta.setLabels(labels);
+        configmap.setMetadata(meta);
+        client.configMaps().create(configmap);
+        given()
+            .when().post("/configmap/namespaceA/test3")
+            .then()
+            .statusCode(204);
+    }
 
 }
