@@ -42,7 +42,7 @@ class ConfigmapApiTest {
 
         // Set up Kubernetes so that our "pretend" pods namespaces created
         client.namespaces().resource(namespace1).create();
-        client.configmaps().resource(cfgTest).create();
+        client.configMaps().resource(cfgTest).create();
     }
 
     @AfterEach
