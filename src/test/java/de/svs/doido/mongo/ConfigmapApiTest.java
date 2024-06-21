@@ -118,7 +118,7 @@ class ConfigmapApiTest {
         given()
             .when().post("/configmap/namespaceA/test3")
             .then()
-            .statusCode(204);
+            .statusCode(403);
     }
 
 }
