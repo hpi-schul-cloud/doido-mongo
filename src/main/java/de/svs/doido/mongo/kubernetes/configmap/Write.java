@@ -23,14 +23,14 @@ public class Write {
         Map<String,String> data;
         ObjectMeta meta;
 
-        if(configmap != NULL) {
+        if(configmap != null) {
             labels = configmap.getMetadata().getLabels();
             if( 
                 labels.containsKey("app.kubernetes.io/name") &&
-                labels.get("app.kubernetes.io/name").equal("doido-mongo")
+                labels.get("app.kubernetes.io/name").equals("doido-mongo")
             ) {
                 data = configmap.getData();
-                data.put("uri", cfg.getUri);
+                data.put("uri", cfg.getUri());
                 configmap.setData(data);
                 client.configMaps().resource(configmap).createOrReplace();
             }
@@ -43,7 +43,7 @@ public class Write {
             configmap = new ConfigMapBuilder().withNewMetadata().withName(cfg.getName()).withNamespace(namespace).and().build();
             configmap.setData(data);
             meta = configmap.getMetadata();
-            meta.setLables(labels);
+            meta.setLabels(labels);
             configmap.setMetadata(meta);
             client.configMaps().resource(configmap).create();
         }

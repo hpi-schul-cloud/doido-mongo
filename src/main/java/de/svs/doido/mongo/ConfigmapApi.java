@@ -30,6 +30,9 @@ public class ConfigmapApi {
     @Path("/{namespace}/{configmapName}")
     @Produces(MediaType.APPLICATION_JSON)
     public void configmapsWrite(String namespace, String configmapName) {
-        cfgWrite.writeConfigmap(namespace,configmapName);
+        Configmap cfg = new Configmap();
+        cfg.setName(configmapName);
+        cfg.setUri("http://www.test.org";)
+        cfgWrite.writeConfigmap(namespace,configmapName,cfg);
     }
 }
