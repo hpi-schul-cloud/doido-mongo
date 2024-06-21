@@ -1,4 +1,4 @@
-package svs.doido.mongo.kubernetes.confgimap;
+package svs.doido.mongo.kubernetes.configmap;
 
 import svs.doido.mongo.dto.Configmap;
 import io.fabric8.kubernetes.api.model.ConfigMap;
