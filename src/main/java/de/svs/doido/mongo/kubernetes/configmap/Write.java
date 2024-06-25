@@ -14,6 +14,9 @@ import java.util.HashMap;
 @RequestScoped
 public class Write {
 
+    private static final String NAME_LABEL = "app.kubernetes.io/name";
+    private static final String NAME_LABEL_VALUE = "doido-mongo";
+
     @Inject
     KubernetesClient client;
 
@@ -26,8 +29,8 @@ public class Write {
         if(configmap != null) {
             labels = configmap.getMetadata().getLabels();
             if( 
-                labels.containsKey("app.kubernetes.io/name") &&
-                labels.get("app.kubernetes.io/name").equals("doido-mongo")
+                labels.containsKey(NAME_LABEL) &&
+                labels.get(NAME_LABEL).equals(NAME_LABEL_VALUE)
             ) {
                 data = configmap.getData();
                 data.put("uri", cfg.getUri());
@@ -42,7 +45,7 @@ public class Write {
         else {
             labels = new HashMap<>();
             data = new HashMap<>();
-            labels.put("app.kubernetes.io/name", "doido-mongo");
+            labels.put(NAME_LABEL, NAME_LABEL_VALUE);
             data.put("uri", cfg.getUri());
             configmap = new ConfigMapBuilder().withNewMetadata().withName(cfg.getName()).withNamespace(namespace).and().build();
             configmap.setData(data);
