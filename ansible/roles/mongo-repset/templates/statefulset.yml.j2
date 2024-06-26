@@ -61,6 +61,7 @@ spec:
       labels:
         app: mongo
     spec:
+      accessModes: [ "ReadWriteOnce" ]
       storageClassName: {{ SC_DEFAULT_STORAGE_CLASS_NAME }}
       resources:
         requests:
