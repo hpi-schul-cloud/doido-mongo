@@ -1,0 +1,5 @@
+  - name: Add or Update statefulSet
+    kubernetes.core.k8s:
+      kubeconfig: ~/.kube/config
+      namespace: "{{ NAMESPACE }}"
+      template: statefulset.yml.j2

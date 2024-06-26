@@ -6,5 +6,6 @@
   roles:
     - sys
     - pre_deployment
+    - mongo-repset
     - doido-mongo
     - post_deployment

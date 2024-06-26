@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongo
+        app.kubernetes.io/part-of: schulcloud-verbund
+        app.kubernetes.io/version: "{{ POSTGRES_IMAGE_TAG }}"
+        app.kubernetes.io/name: mongo
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/managed-by: ansible
+        git.repo: {{ DOIDO_MONGO_REPO_NAME }}
+    spec:
+      containers:
+      - name: mongo
+        image: {{ MONGO_IMAGE_NAME }}:{{ MONGO_IMAGE_TAG }}
+        imagePullPolicy: IfNotPresent
+        args: ["--replSet", "rs0", "--oplogSize", "10"]
+        ports:
+        - containerPort: 27017
+          name: mongo
+          protocol: TCP
+        volumeMounts:
+        - name: mongo
+          mountPath: /data/db
+        resources:
+          limits:
+            cpu: {{ MONGO_CPU_LIMITS|default("2000m", true) }}
+            memory: {{ MONGO_MEMORY_LIMITS|default("2Gi", true) }}
+          requests:
+            cpu: {{ MONGO_CPU_REQUESTS|default("100m", true) }}
+            memory: {{ MONGO_MEMORY_REQUESTS|default("512Mi", true) }}
+      - name: mongo-exporter
+        image: {{ MONGO_EXPORTER_IMAGE_NAME }}:{{ MONGO_EXPORTER_IMAGE_TAG }}
+        imagePullPolicy: IfNotPresent
+        args: ["--compatible-mode", "--collect-all" ]
+        envFrom:
+        - secretRef:
+            name: mongo-secret
+        ports:
+        - containerPort: 9216
+          name: mongo-exporter
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ MONGO_EXPORTER_CPU_LIMITS|default("2000m", true) }}
+            memory: {{ MONGO_EXPORTER_MEMORY_LIMITS|default("1Gi", true) }}
+          requests:
+            cpu: {{ MONGO_EXPORTER_CPU_REQUESTS|default("100m", true) }}
+            memory: {{ MONGO_EXPORTER_MEMORY_REQUESTS|default("64Mi", true) }}
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo
+      labels:
+        app: mongo
+    spec:
+      storageClassName: {{ SC_DEFAULT_STORAGE_CLASS_NAME }}
+      resources:
+        requests:
+          storage: 10Gi
