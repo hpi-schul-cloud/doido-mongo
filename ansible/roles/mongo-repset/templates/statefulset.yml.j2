@@ -2,6 +2,12 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
+  app.kubernetes.io/part-of: schulcloud-verbund
+  app.kubernetes.io/version: "{{ POSTGRES_IMAGE_TAG }}"
+  app.kubernetes.io/name: mongo
+  app.kubernetes.io/component: operator
+  app.kubernetes.io/managed-by: ansible
+  git.repo: {{ DOIDO_MONGO_REPO_NAME }}
 spec:
   selector:
     matchLabels:
