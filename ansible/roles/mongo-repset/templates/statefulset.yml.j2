@@ -28,7 +28,7 @@ spec:
       - name: mongo
         image: {{ MONGO_IMAGE_NAME }}:{{ MONGO_IMAGE_TAG }}
         imagePullPolicy: IfNotPresent
-        args: ["--replSet", "rs0", "--oplogSize", "10"]
+        args: ["--replSet", "rs0", "--oplogSize", "10", "--bind_ip_all" ]
         ports:
         - containerPort: 27017
           name: mongo
@@ -46,7 +46,7 @@ spec:
       - name: mongo-exporter
         image: {{ MONGO_EXPORTER_IMAGE_NAME }}:{{ MONGO_EXPORTER_IMAGE_TAG }}
         imagePullPolicy: IfNotPresent
-        args: ["--compatible-mode", "--collect-all --bind_ip_all" ]
+        args: ["--compatible-mode", "--collect-all" ]
         envFrom:
         - secretRef:
             name: mongo-secret
