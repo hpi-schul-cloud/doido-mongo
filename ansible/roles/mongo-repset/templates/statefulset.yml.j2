@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/managed-by: ansible
         git.repo: {{ DOIDO_MONGO_REPO_NAME }}
     spec:
-      serviceName: mongo-svc
+      serviceName: "mongo-svc"
       containers:
       - name: mongo
         image: {{ MONGO_IMAGE_NAME }}:{{ MONGO_IMAGE_TAG }}
