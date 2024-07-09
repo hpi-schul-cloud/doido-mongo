@@ -23,6 +23,6 @@ public class Admin {
     @GET
     @Path("/{clientname}")
     public void testConnect(String clientname) {
-        MongoClientConfig monClient = io.quarkus.mongodb.runtime.mongoClient.getMatchingMongoClientConfig(clientname);
+        MongoClientConfig monClient = io.quarkus.mongodb.runtime.MongoClients.getMatchingMongoClientConfig(clientname);
     }
 }
