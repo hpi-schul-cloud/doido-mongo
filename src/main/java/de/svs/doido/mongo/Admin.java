@@ -2,6 +2,7 @@ package svs.doido.mongo;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;
+import jakarta.inject.Inject;
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import com.mongodb.client.MongoClient;
@@ -21,7 +22,7 @@ public class Admin {
 
     @GET
     @Path("/{clientname}")
-    public void testConnect(string clientname) {
+    public void testConnect(String clientname) {
         MongoClientConfig monClient = io.quarkus.mongodb.runtime.mongoClient.getMatchingMongoClientConfig(clientname);
     }
 }
