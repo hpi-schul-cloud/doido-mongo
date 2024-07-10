@@ -31,7 +31,7 @@ public class Admin {
         String uri = "mongodb://mongodb-2.mongo-svc:27017/replicaSet=rs0&directConnection=false";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
-                .build():
+                .build();
          MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(uri))
                 .serverApi(serverApi)
