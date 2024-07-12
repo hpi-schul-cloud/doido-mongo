@@ -21,7 +21,7 @@ public class MongoServer {
     @Getter
     private ConnectionString connectionString;
 
-    public void MongoServer(String name, String connectionString) {
+    public MongoServer(String name, String connectionString) {
         if (name == null ) {
             throw new NullPointerException();
         }
