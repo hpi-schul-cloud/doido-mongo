@@ -16,6 +16,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import java.util.List;
 
+import svs.doido.mongo.dto.MongoServer;
+
 @Path("/admin")
 public class Admin {
 
@@ -30,14 +32,7 @@ public class Admin {
     @Path("/{clientname}")
     public void testConnect(String clientname) {
         String uri = "mongodb://mongodb-2.mongo-svc:27017/replicaSet=rs0&directConnection=false";
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
-                .build();
-         MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(uri))
-                .serverApi(serverApi)
-                .build();
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
+        try (MongoClient mongoClient = new MongoServer(clientname, uri).getMongoClient()) {
             MongoDatabase database = mongoClient.getDatabase(clientname);
             try {
                 // Send a ping to confirm a successful connection
