@@ -12,6 +12,6 @@ class MongoServerTest {
     void testGetterSetterName() {
         MongoServer a = new MongoServer("Server 1","mongodb://mongodb-2.mongo-svc:27017/replicaSet=rs0&directConnection=false");        
         MongoServer b = new MongoServer("Server 1","mongodb://mongodb-2.mongo-svc:27017/replicaSet=rs0&directConnection=false");
-        assertEquals(1,a.equasl(b));
+        assertEquals(1,a.equals(b));
     }
 }
